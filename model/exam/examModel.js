@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const examSchema = new mongoose.Schema(
   {
-name:{
-type:String,
-required:true,
-trim:true,
-},
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     yearLevel: {
       type: Number,
       required: true,
@@ -37,7 +37,7 @@ trim:true,
 );
 examSchema.index(
   {
-name:1,
+    name: 1,
     yearLevel: 1,
     subjectId: 1,
   },

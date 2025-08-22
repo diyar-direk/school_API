@@ -10,11 +10,11 @@ const allowedTo = require("../../middleWare/allowedTo");
 const router = express.Router();
 router
   .route("/")
-  .get(allowedTo("admin", "teacher", "student"), getAll)
-  .post(allowedTo("admin"), addSubject)
-  .delete(allowedTo("admin"), deleteSubjects);
+  .get(allowedTo("Admin", "Teacher", "Student"), getAll)
+  .post(allowedTo("Admin"), addSubject)
+  .delete(allowedTo("Admin"), deleteSubjects);
 router
   .route("/:id")
-  .get(allowedTo("admin"), getOne)
-  .patch(allowedTo("admin"), updateSubject);
+  .get(allowedTo("Admin"), getOne)
+  .patch(allowedTo("Admin"), updateSubject);
 module.exports = router;

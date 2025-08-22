@@ -4,23 +4,21 @@ const {
   getOne,
   register,
   login,
-  updateRole,
   deleteUsers,
   getUserProfile,
+  updateUser,
 } = require("../../controller/users/usersController");
 const allowedTo = require("../../middleWare/allowedTo");
 const router = express.Router();
 router
   .route("/")
-  .get(allowedTo("admin"), getAll)
-  .post(allowedTo("admin"), register)
-  .delete(allowedTo("admin"), deleteUsers);
-router
-  .route("/:id")
-  .get(allowedTo("admin"), getOne)
-  .patch(allowedTo("admin"), updateRole);
+  .all(allowedTo("Admin"))
+  .get(getAll)
+  .post(register)
+  .delete(deleteUsers);
+router.route("/:id").all(allowedTo("Admin")).get(getOne).patch(updateUser);
 router.route("/login").post(login);
 router
   .route("/profile/me")
-  .get(allowedTo("teacher", "admin", "student"), getUserProfile);
+  .get(allowedTo("Admin", "Teacher", "Student"), getUserProfile);
 module.exports = router;

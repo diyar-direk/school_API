@@ -13,9 +13,16 @@ const usersSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["admin", "teacher", "student"],
-    default: "student",
+    enum: ["Admin", "Teacher", "Student"],
+    default: "Student",
   },
+
+  profileId: {
+    type: mongoose.Types.ObjectId,
+    refPath: "role",
+    required: true,
+  },
+
   createdBy: {
     ref: "User",
     type: mongoose.Types.ObjectId,
@@ -29,4 +36,6 @@ usersSchema.index(
     unique: true,
   }
 );
+usersSchema.index({ profileId: 1, role: 1 }, { unique: true });
+
 module.exports = new mongoose.model("User", usersSchema);
