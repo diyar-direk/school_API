@@ -1,4 +1,6 @@
 const express = require("express");
+const allowedTo = require("../../middleware/allowedTo");
+
 const {
   getAll,
   getOne,
@@ -8,7 +10,6 @@ const {
   getUserProfile,
   updateUser,
 } = require("../../controller/users/usersController");
-const allowedTo = require("../../middleWare/allowedTo");
 const router = express.Router();
 router
   .route("/")
@@ -16,9 +17,9 @@ router
   .get(getAll)
   .post(register)
   .delete(deleteUsers);
-router.route("/:id").all(allowedTo("Admin")).get(getOne).patch(updateUser);
 router.route("/login").post(login);
 router
-  .route("/profile/me")
+  .route("/me")
   .get(allowedTo("Admin", "Teacher", "Student"), getUserProfile);
+router.route("/:id").all(allowedTo("Admin")).get(getOne).patch(updateUser);
 module.exports = router;
