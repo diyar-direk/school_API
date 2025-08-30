@@ -6,13 +6,17 @@ class APIServerHelper {
   constructor(model) {
     this.model = model;
   }
-  getAll = async (req, res, searchFields, populate = ["createdBy"]) => {
+  getAll = async (req, res, searchFields, populate = []) => {
+    const populatedData = [
+      ...populate,
+      { path: "createdBy", select: "username _id" },
+    ];
     if (req.query.search)
-      return search(this.model, searchFields, populate, req, res);
+      return search(this.model, searchFields, populatedData, req, res);
     try {
       const parsedQuery = parsedQueryHelper(req.query);
       const features = new APIFeatures(
-        this.model.find().lean().populate(populate),
+        this.model.find().lean().populate(populatedData),
         req.query
       )
         .paginate()
@@ -33,10 +37,14 @@ class APIServerHelper {
       res.status(400).json({ message: error.message });
     }
   };
-  getOne = async (req, res, populate = ["createdBy"]) => {
+  getOne = async (req, res, populate = []) => {
+    const populatedData = [
+      ...populate,
+      { path: "createdBy", select: "username _id" },
+    ];
     try {
       const { id } = req.params;
-      const data = await this.model.findById(id).populate(populate);
+      const data = await this.model.findById(id).populate(populatedData);
       if (!data) return res.status(404).json({ message: "not found" });
       res.json({ message: "operation done successfully", data });
     } catch (error) {

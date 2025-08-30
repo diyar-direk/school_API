@@ -48,11 +48,11 @@ const getStudents = (req, res) =>
     req,
     res,
     ["firstName", "middleName", "lastName"],
-    ["createdBy", "classId"]
+    [{ path: "classId", select: "name _id" }]
   );
 
 const getStudentById = (req, res) =>
-  apiServerHelper.getOne(req, res, ["createdBy", "classId"]);
+  apiServerHelper.getOne(req, res, [{ path: "classId", select: "name _id" }]);
 
 const deleteStudents = (req, res) => apiServerHelper.deleteMany(req, res);
 

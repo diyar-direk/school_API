@@ -21,7 +21,7 @@ const subjectSchema = new mongoose.Schema(
 );
 subjectSchema.index(
   {
-    nama: 1,
+    name: 1,
     yearLevel: 1,
   },
   { unique: true }

@@ -27,11 +27,22 @@ const addSubjectsSchedule = async (req, res) => {
 
 const getSubjectsSchedule = (req, res) => {
   req.sort = { ...req.sort, startTime: 1 };
-  apiServer.getAll(req, res, [], ["classId", "createdBy", "subjectId"]);
+  apiServer.getAll(
+    req,
+    res,
+    [],
+    [
+      { path: "classId", select: "_id name" },
+      { path: "subjectId", select: "_id name" },
+    ]
+  );
 };
 
 const getOne = (req, res) =>
-  apiServer.getOne(req, res, ["classId", "createdBy", "subjectId"]);
+  apiServer.getOne(req, res, [
+    { path: "classId", select: "_id name" },
+    { path: "subjectId", select: "_id name" },
+  ]);
 
 const updateSchedule = async (req, res) => {
   try {

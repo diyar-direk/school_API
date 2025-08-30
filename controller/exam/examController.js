@@ -3,9 +3,9 @@ const Subject = require("../../model/subject/subjectModel");
 const APIServerHelper = require("../../utils/apiServerHelper");
 const apiServerHelper = new APIServerHelper(Exam);
 const getAll = (req, res) =>
-  apiServerHelper.getAll(req, res, [], ["createdBy", "subjectId"]);
+  apiServerHelper.getAll(req, res, [], [{ path: "subjectId", select: "name" }]);
 const getOne = (req, res) =>
-  apiServerHelper.getOne(req, res, ["createdBy", "subjectId"]);
+  apiServerHelper.getOne(req, res, [{ path: "subjectId", select: "name" }]);
 
 const addExam = async (req, res) => {
   const { subjectId } = req.body;

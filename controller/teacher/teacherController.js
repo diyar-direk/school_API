@@ -1,6 +1,6 @@
 const Teacher = require("../../model/teacher/teacherModel");
 const Subject = require("../../model/subject/subjectModel");
-const APIServerHelper = require("../../utils/APIServerHelper");
+const APIServerHelper = require("../../utils/apiServerHelper");
 const apiServer = new APIServerHelper(Teacher);
 const createTeacher = async (req, res) => {
   const { yearLevel, subjects } = req.body;
@@ -25,11 +25,11 @@ const getTeachers = (req, res) =>
     req,
     res,
     ["firstName", "middleName", "lastName"],
-    ["createdBy", "subjects"]
+    [{ path: "subjects", select: "_id name" }]
   );
 
 const getTeacher = (req, res) =>
-  apiServer.getOne(req, res, ["createdBy", "subjects"]);
+  apiServer.getOne(req, res, [{ path: "subjects", select: "_id name" }]);
 
 const deleteTeachers = (req, res) => apiServer.deleteMany(req, res);
 

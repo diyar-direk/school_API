@@ -6,10 +6,12 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 connection();
+const morgan = require("morgan");
 
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
+app.use(morgan(":method :url :status :response-time ms"));
 
 const userRouter = require("./router/users/usersRouter");
 
