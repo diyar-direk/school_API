@@ -2,6 +2,7 @@ const Student = require("../../model/student/studentModel");
 const APIServerHelper = require("../../utils/apiServerHelper");
 const apiServerHelper = new APIServerHelper(Student);
 const Class = require("../../model/class/classModel");
+const ExamResults = require("../../model/exam/examResultsModel");
 const createStudent = async (req, res) => {
   try {
     const { yearLevel, repeatedYears, classId } = req.body;
@@ -54,7 +55,12 @@ const getStudents = (req, res) =>
 const getStudentById = (req, res) =>
   apiServerHelper.getOne(req, res, [{ path: "classId", select: "name _id" }]);
 
-const deleteStudents = (req, res) => apiServerHelper.deleteMany(req, res);
+const deleteStudents = async (req, res) => {
+  apiServerHelper.deleteMany(req, res);
+  await ExamResults.deleteMany({
+    studentId: { $in: req.body.ids },
+  });
+};
 
 const updateStudent = async (req, res) => {
   try {
