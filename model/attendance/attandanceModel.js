@@ -9,6 +9,10 @@ const attendanceSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: true,
+      validate: {
+        validator: (date) => date.getTime() <= Date.now(),
+        message: "date can not be in future",
+      },
     },
     studentId: {
       type: mongoose.Types.ObjectId,
@@ -17,15 +21,20 @@ const attendanceSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Present", "Absent", "Other"],
-      default: "Other",
+      enum: ["Present", "Absent"],
+      required: true,
+    },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
   },
-  { timestamps }
+  { timestamps: true }
 );
 attendanceSchema.index(
   {
     studentId: 1,
+    classId: 1,
     date: 1,
   },
   { unique: true }

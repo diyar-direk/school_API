@@ -13,41 +13,24 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan(":method :url :status :response-time ms"));
 
-const userRouter = require("./router/users/usersRouter");
+const routers = {
+  users: "users/usersRouter",
+  admin: "users/adminRouter",
+  teachers: "teacher/teacherRouter",
+  students: "student/studentRouter",
+  classes: "class/classRouter",
+  subjects: "subject/subjectRouter",
+  "subjects-schedule": "subject/subjectsSchedualeRouter",
+  attendance: "attandance/attandanceRouter",
+  exams: "exam/examRouter",
+  "exam-results": "exam/examResultsRouter",
+  statistics: "statistics/statisticsRouter",
+};
 
-const subjectRouter = require("./router/subject/subjectRouter");
-
-const subjectsScheduleRouter = require("./router/subject/subjectsSchedualeRouter");
-
-const classesRouter = require("./router/class/classRouter");
-
-const examRouter = require("./router/exam/examRouter");
-
-const teacherRouter = require("./router/teacher/teacherRouter");
-
-const studentRouter = require("./router/student/studentRouter");
-
-const adminRouter = require("./router/users/adminRouter");
-
-const examResultsRouter = require("./router/exam/examResultsRouter");
-
-app.use("/api/users", userRouter);
-
-app.use("/api/admin", adminRouter);
-
-app.use("/api/subjects", subjectRouter);
-
-app.use("/api/subjects-schedule", subjectsScheduleRouter);
-
-app.use("/api/classes", classesRouter);
-
-app.use("/api/exams", examRouter);
-
-app.use("/api/exam-results", examResultsRouter);
-
-app.use("/api/teachers", teacherRouter);
-
-app.use("/api/students", studentRouter);
+Object.entries(routers).forEach(([path, router]) => {
+  const route = require(`./router/${router}`);
+  app.use(`/api/${path}`, route);
+});
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route Not Found" });

@@ -3,7 +3,12 @@ const Subject = require("../../model/subject/subjectModel");
 const APIServerHelper = require("../../utils/apiServerHelper");
 const apiServerHelper = new APIServerHelper(Exam);
 const getAll = (req, res) =>
-  apiServerHelper.getAll(req, res, [], [{ path: "subjectId", select: "name" }]);
+  apiServerHelper.getAll(
+    req,
+    res,
+    ["name"],
+    [{ path: "subjectId", select: "name" }]
+  );
 const getOne = (req, res) =>
   apiServerHelper.getOne(req, res, [{ path: "subjectId", select: "name" }]);
 

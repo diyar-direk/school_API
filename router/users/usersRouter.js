@@ -1,5 +1,5 @@
 const express = require("express");
-const allowedTo = require("../../middleware/allowedTo");
+const allowedTo = require("../../middleWare/allowedTo");
 
 const {
   getAll,

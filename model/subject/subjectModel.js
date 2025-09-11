@@ -4,8 +4,10 @@ const subjectSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      trim: true,
-      lowercase: true,
+    },
+    code: {
+      type: String,
+      required: true,
     },
     yearLevel: {
       type: Number,
@@ -25,5 +27,13 @@ subjectSchema.index(
     yearLevel: 1,
   },
   { unique: true }
+);
+subjectSchema.index(
+  {
+    code: 1,
+  },
+  {
+    unique: true,
+  }
 );
 module.exports = new mongoose.model("Subject", subjectSchema);

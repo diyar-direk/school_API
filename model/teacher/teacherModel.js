@@ -15,12 +15,12 @@ const teacherSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female"],
+      enum: ["Male", "Female"],
       required: true,
     },
     maritalStatus: {
       type: String,
-      enum: ["single", "married", "other"],
+      enum: ["Single", "Married", "Other"],
       required: true,
     },
     email: {
